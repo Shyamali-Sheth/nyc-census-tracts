@@ -1,0 +1,37 @@
+---
+title: "Census Tracts"
+author: "David Kane"
+format: html
+execute: 
+  echo: false
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(ggbeeswarm)
+```
+
+
+```{r}
+x <- read_csv("data/nyc_tracts.csv", show_col_types = FALSE)
+```
+
+
+
+```{r}
+#| message: false
+x |> 
+  drop_na() |> 
+  ggplot(aes(x = med_income, y = race, colour = med_income)) +
+    geom_quasirandom() +
+    scale_color_viridis_c(guide = "none")
+    scale_x_continuous(labels = scales::dollar_format()) +
+    labs(title = "Household income distribution by largest racial/ethnic group",
+       subtitle = "Census tracts, New York City",
+       x = "Median household income",
+       y = NULL) 
+```
+
